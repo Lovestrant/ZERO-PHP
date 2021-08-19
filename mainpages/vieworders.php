@@ -106,7 +106,7 @@
                     
                 <div style='margin-bottom: 5%;text-align:centre;'>
                
-                <div style='text-transform: uppercase;color: green;margin-left:10%; text-align:centre;
+                <div style='color: green;margin-left:0%; text-align:centre;
                 margin-top: 4%;margin-bottom: 4%;'>
                 <h2 style='text-decoration: underline;'>".$row['adtitle']."</h2>
                 <div>
@@ -116,7 +116,8 @@
                    
                     <p>Buyer Name: <label style='color:red;'>".$row['fullname']."</label></p>
                     <p>Buyer Phone: <label style='color: red;'>".$row['buyerPhone']."</label></p>
-                    <p>Buyer Phone: <label style='color: red;'>".$row['price']."</label></p>
+                    <p>Price: <label style='color: red;'>".$row['price']."</label></p>
+                    <p>Location: <label style='color: red;'>".$row['address']."</label></p>
 
                     <form action = 'vieworders.php' method='post'>
                     <input type='hidden' name= 'hiddenid' value=".$row['id']."> 

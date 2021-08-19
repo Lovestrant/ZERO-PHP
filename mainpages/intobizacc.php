@@ -163,7 +163,7 @@
          $accId = $_GET['acc_id'];
        
      
-             $sql="SELECT * FROM followerstable where phonenumber='$phonenumber' and accountId = '$accId'";
+             $sql="SELECT * FROM followerstable where accountId = '$accId'";
  
   
                     $data2= mysqli_query($con,$sql);

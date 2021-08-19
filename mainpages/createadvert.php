@@ -31,6 +31,8 @@
                   $accountName = $row['accountName'];
                   $Bizdescription = $row['description'];
                   $location = $row['location'];
+                  $latitude = $_SESSION['latitude'];
+                  $longitude = $_SESSION['longitude'];
 
         if(!empty($description) || !empty($description) || !empty($profileurl)) {
 
@@ -40,8 +42,8 @@
             $tmp = $_FILES['file']['tmp_name'];
             move_uploaded_file($tmp,"../files/adpics/adpics".$picurl);
 
-            $sql = "INSERT INTO adverts(phonenumber, accId, adtitle,description,picurl,price,accountName,Bizdescription,location) 
-            values('$phonenumber', '$accId','$adtitle','$description','$picurl','$price','$accountName','$Bizdescription','$location');";
+            $sql = "INSERT INTO adverts(phonenumber, accId, adtitle,description,picurl,price,accountName,Bizdescription,location,longitude,latitude) 
+            values('$phonenumber', '$accId','$adtitle','$description','$picurl','$price','$accountName','$Bizdescription','$location','$longitude','$latitude');";
             $res = mysqli_query($con,$sql);
             
         

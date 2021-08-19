@@ -30,9 +30,13 @@
         function toHome() {
             location.replace("home.php");
         }
-
+        function toRadius() {
+            location.replace('radius.php?lat=' + <?php echo $_SESSION["latitude"] ?> + '&long=' + <?php echo $_SESSION["longitude"] ?>, '_self')
+            
+        }
 
     </script>
+  
 
 </head>
 <body>
@@ -54,8 +58,11 @@
     </div>
 
   <div class="col-sm-12" style="text-align: right; margin-right: 2%; margin-top: -2%;">
+  
+  <button id="radius" onClick = "toRadius()">Radius</button>
+  <button onClick = "toHome()">FollowerAds</button>
   <button onClick = "toProfile()">Profile</button>
-  <button onClick = "toHome()">Home</button>
+  
   <button onClick = "toFindSellers()">FindSellers</button>
   </div>
   

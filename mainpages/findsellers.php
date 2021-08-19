@@ -114,6 +114,10 @@
 <?php
 
   include_once('../db.php');
+
+
+
+
   $phonenumber = $_SESSION['phonenumber'];
 
   $sql2="SELECT * FROM bizaccounts where phonenumber != '$phonenumber'";
@@ -131,71 +135,89 @@
             $accountId = $row['id'];
             $phonenumber = $_SESSION['phonenumber'];
 
-            $sql= "SELECT * FROM followersTable WHERE bizaccountName = '$bizaccountName' and accountId = '$accountId' and phonenumber = '$phonenumber'";
-            $data = mysqli_query($con, $sql);
-            $queryResults = mysqli_num_rows($data);
-    
-            if($queryResults >0) {
-                echo "
-                    
-                <div style='margin-bottom: 5%;text-align:centre;'>
+            //get number of followers
+        $sql= "SELECT * FROM followersTable WHERE bizaccountName = '$bizaccountName' and accountId = '$accountId'";
+        $data = mysqli_query($con, $sql);
+        $queryResults2 = mysqli_num_rows($data);
+        if($queryResults2 || !$queryResults2) { 
+
+        $sql= "SELECT * FROM followersTable WHERE bizaccountName = '$bizaccountName' and accountId = '$accountId' and phonenumber = '$phonenumber'";
+        $data = mysqli_query($con, $sql);
+        $queryResults = mysqli_num_rows($data);
+
+        if($queryResults >0){
+            echo "
+            
+        <div style='margin-bottom: 5%;text-align:centre;'>
+       
+        <div style='text-transform: uppercase;color: green;margin-left:0%; text-align:centre;
+        margin-top: 4%;margin-bottom: 4%;'>
+        <h2 style='text-decoration: underline;'>".$row['accountName']."</h2>
+        <div>
+        <img src='../files/bizprofiles/bizprofiles".$row['profileurl']."' style = 'width: 20%;border-radius:100%; height:auto;'>
                
-                <div style='text-transform: uppercase;color: green;margin-left:0%; text-align:centre;
-                margin-top: 4%;margin-bottom: 4%;'>
-                <h2 style='text-decoration: underline;'>".$row['accountName']."</h2>
-                <div>
-                <img src='../files/bizprofiles/bizprofiles".$row['profileurl']."' style = 'width: 20%;border-radius:100%; height:auto;'>
-                       
-     
-               
 
-                    <p>".$row['description']."</p>
-                    <form action ='findsellers.php' method='post'>
-                    <input type='hidden' name= 'hiddenName' value='".$row['accountName']."'> 
-                    <input type='hidden' name= 'hiddenid' value=".$row['id']."> 
-                    <button style='margin-left: 5%;margin-top:19px; color:blue;' name='unfollow'>UnFollow</button>
-                    </form>
-                 </div>
-                </div>
-                
-                </div>
-                ";
+       
+
+            <p>".$row['description']."</p>
+            <p><label style='color: red;'>$queryResults2  Followers</label></p>
+
+            <form action ='findsellers.php' method='post'>
+            <input type='hidden' name= 'hiddenName' value='".$row['accountName']."'> 
+            <input type='hidden' name= 'hiddenid' value=".$row['id']."> 
+            <button style='margin-left: 5%;margin-top:19px; color:blue;' name='unfollow'>UnFollow</button>
+            </form>
+         </div>
+        </div>
+        
+        </div>
+        ";
+
+
+      }else{
+        echo "
+            
+            <div style='margin-bottom: 5%;text-align:centre;'>
+           
+            <div style='text-transform: uppercase;color: green;margin-left:0%; text-align:centre;
+            margin-top: 4%;margin-bottom: 4%;'>
+            <h2 style='text-decoration: underline;'>".$row['accountName']."</h2>
+            <div>
+            <img src='../files/bizprofiles/bizprofiles".$row['profileurl']."' style = 'width: 20%;border-radius:100%; height:auto;'>
+                   
+ 
+           
+
+                <p>".$row['description']."</p>
+
+                <p><label style='color: red;'>$queryResults2  Followers</label></p>
+                <form action ='findsellers.php' method='post'>
+                <input type='hidden' name= 'hiddenName' value='".$row['accountName']."'> 
+                <input type='hidden' name= 'hiddenid' value=".$row['id']."> 
+                <button style='margin-left: 5%;margin-top:19px; color:red;' name='follow'>Follow</button>
+                </form>
+             </div>
+            </div>
+            
+            </div>
+            ";
 
     
-            }else{
-                echo "
-                    
-                    <div style='margin-bottom: 5%;text-align:centre;'>
-                   
-                    <div style='text-transform: uppercase;color: green;margin-left:0%; text-align:centre;
-                    margin-top: 4%;margin-bottom: 4%;'>
-                    <h2 style='text-decoration: underline;'>".$row['accountName']."</h2>
-                    <div>
-                    <img src='../files/bizprofiles/bizprofiles".$row['profileurl']."' style = 'width: 20%;border-radius:100%; height:auto;'>
-                           
-         
-                   
 
-                        <p>".$row['description']."</p>
-                        <form action ='findsellers.php' method='post'>
-                        <input type='hidden' name= 'hiddenName' value='".$row['accountName']."'> 
-                        <input type='hidden' name= 'hiddenid' value=".$row['id']."> 
-                        <button style='margin-left: 5%;margin-top:19px; color:red;' name='follow'>Follow</button>
-                        </form>
-                     </div>
-                    </div>
-                    
-                    </div>
-                    ";
 
-            }
-    
-                   
-
-                
-
-          }
         }
+
+ }
+
+           
+            }
+                
+                   
+            
+               
+
+     }
+    
 
 ?>
     </div>

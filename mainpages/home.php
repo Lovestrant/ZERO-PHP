@@ -39,9 +39,9 @@
 
     <div class="row">
 <div class = "row" style="margin-left: 4%;">
-    <p>Welcome <?php $fullname = $_SESSION['fullname']; echo "<label style='color: red;font-size: 20px;'> $fullname</label>"; ?></p>
+    <p>Hello <?php $fullname = $_SESSION['fullname']; echo "<label style='color: red;font-size: 20px;'> $fullname</label>"; ?></p>
 
-  <p style='color:purple;'>Recent adverts:</p>
+  <p style='color:purple;'>Recent adverts from you and your followers:</p>
     </div>
 
 <div class="col-sm-12" id="homebody">
@@ -101,7 +101,7 @@ if($_SESSION['phonenumber']){
                     
                    ";
 
-                 }elseif($row['phonenumber'] != $_SESSION['phonenumber'] && $accountbizName === $row['accountName']) {
+                 }elseif($row['phonenumber'] != $_SESSION['phonenumber']) {
                      echo "  
                      <div>
                      <h2 style='color: red;'>".$row['accountName']."</h2>

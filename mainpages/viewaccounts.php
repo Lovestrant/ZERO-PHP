@@ -118,7 +118,7 @@
       
                     echo "
                     
-                    <div style='margin-bottom: 5%;text-align:centre;'>
+                    <div style='margin-bottom: 5%;text-align:centre;margin-left: 15%;'>
                    
                     <div style='text-transform: uppercase;color: green;margin-left:10%; text-align:centre;
                     margin-top: 4%;margin-bottom: 4%;'>

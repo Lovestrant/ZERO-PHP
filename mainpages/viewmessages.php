@@ -45,13 +45,10 @@
   $fullname = $_SESSION['fullname'];
 
 
-            $sql="SELECT * FROM chats where buyerPhonenumber= '$phonenumber' and fullname !='$fullname' group by sellerPhonenumber";
+            $sql="SELECT * FROM chats where buyerPhonenumber= '$phonenumber' and fullname ='$fullname' group by sellerPhonenumber";
             
             $data2= mysqli_query($con,$sql);
             $queryResults2= mysqli_num_rows($data2);
-
-
-            
 
         if($queryResults2 >0) {
            while($row = mysqli_fetch_assoc($data2)) {
@@ -70,7 +67,8 @@
                    
             </div>
 
-            <div style='display:flex;margin-top: -1%;text-transform: none;margin-right: 10%;'>
+            <div style='display:flex;margin-top: -1%;text-transform: none;margin-right: 10%;
+            background-color: lightgreen; padding:0.5%;border-radius:10px;'>
             <a href='chatprofile.php?messageId=".$row['id']."'>
             <p>".$row['message']."</p>
             </a> 

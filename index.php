@@ -20,6 +20,13 @@ if(isset($_POST['submit'])){
     $queryResults= mysqli_num_rows($result);
     
     if($queryResults) {
+
+        //get latitude and longitude from user location
+
+
+        //  $_SESSION['longitude'] = $longitude;
+        //$_SESSION['latitude'] = $latitude;
+
         while($row = mysqli_fetch_assoc($result)) {
 
         //set session variables
@@ -30,15 +37,27 @@ if(isset($_POST['submit'])){
 
         //taking user to main page
         $errors['success'] = "Login successful.";
-    
-        echo "<script>location.replace('mainpages/home.php')</script>";
 
+echo '
+<script>
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            var ab = pos.coords.latitude;
+            var ac = pos.coords.longitude;
+            window.open("mainpages/radius.php?lat=" + ab + "&long=" + ac, "_self");
+        });
+       
+</script>
+';
+
+    
         }
     }else{
         $errors['phonenumberErr'] = "Wrong combinations. Fill your details correctly.";
      
        
     }
+
+ 
         
 }
 
@@ -67,13 +86,6 @@ if(isset($_POST['submit'])){
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 
-<script>
-function adminLogin() {
-    location.replace("adminlogin.php");
-}
-
-</script>
-
 
 
 </head>
@@ -99,7 +111,7 @@ function adminLogin() {
         <div><h5 style="color: red;"><?php echo $errors['phonenumberErr']; ?></h5></div>
         <div><h5 style="color: green;"><?php echo $errors['success']; ?></h5></div>
         
-            <input type= "submit" name="submit" title="Login">
+            <button type= "submit" name="submit" title="Login">Login</button>
 
         </form>
     </div>

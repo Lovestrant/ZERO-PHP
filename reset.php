@@ -31,33 +31,26 @@ if(isset($_POST['submit'])){
             
             
             if($queryResults) {
+
+                while($row = mysqli_fetch_assoc($result)) {
                $password1 = md5($password);//encryption of password
                 $sql = "UPDATE authentication set password = '$password1' where phonenumber= '$phonenumber'";
-            $res = mysqli_query($con,$sql);
-            
-        
-    if($res ==1){
-    //set session variables
-    $_SESSION['fullname'] = $row['fullname'];
-    $_SESSION['phonenumber'] = $row['phonenumber'];
-
-
-
-     $errors['success'] ="Update successful. You are now logged in.";
-           
-          echo "<script>location.replace('mainpages/home.php')</script>";
-    }else{
-                   
-        $errors['phonenumberErr'] = "No user with those details in the system. Please try again. Ensure you fill your details correctly.";
-                      
+               $res = mysqli_query($con,$sql);       
+                if($res ==1){
+                //set session variables
+                $_SESSION['fullname'] = $row['fullname'];
+                $_SESSION['phonenumber'] = $row['phonenumber'];
+                $errors['success'] ="Update successful. You are now logged in.";
                     
-            }}}
-    
-    
-
-            
-        
+                    echo "<script>location.replace('index2.php')</script>";    
+    }else{               
+        $errors['phonenumberErr'] = "No user with those details in the system. Please try again. Ensure you fill your details correctly.";
+                                   
+            }
+        }
+    }    
       }
+    }
    
 
 

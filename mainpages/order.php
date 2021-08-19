@@ -172,7 +172,7 @@
  <div class="col-sm-12">
     <form action = "order.php" method="post">
     <input type="hidden" name= "hiddenid" value=<?php $id= $_GET['postId']; echo $id; ?>> <!-- Hidden input-->
-    <input class="passinput" type ="text" name="address" placeholder="Enter Adress where Product will be delivered" value="<?php echo $accountname; ?>"><br><br>
+    <input class="passinput" type ="text" name="address" placeholder="Enter Adress where Product will be delivered" required value="<?php echo $accountname; ?>"><br><br>
      <button name="orderProduct" style="background-color: green;color:white;">Order Product</button>
     </form>
 

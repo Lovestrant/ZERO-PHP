@@ -55,7 +55,7 @@ if(isset($_POST['submit'])){
 
         $errors['success'] = "Registration successful. You are now logged in.";
 		
-            echo "<script>location.replace('mainpages/home.php')</script>";
+            echo "<script>location.replace('index2.php')</script>";
 		}
 
         }
@@ -106,7 +106,7 @@ function adminLogin() {
 </div>
 
 <div class = "container" id="headerbody">
-<div class = "row">
+<div class = "row" style='margin-top: -2%;'>
     <div class="col-sm-4">
         <p id="topparagraph">Create An Account:</p>
     </div>
