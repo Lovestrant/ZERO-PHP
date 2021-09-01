@@ -23,13 +23,16 @@
 
             
 
-
-
             $picurl = $_FILES['file']['name'];
             $tmp = $_FILES['file']['tmp_name'];
             move_uploaded_file($tmp,"../files/adpics/adpics".$picurl);
+            //upload second picture
+            
+            $picurl2 = $_FILES['file2']['name'];
+            $tmp = $_FILES['file2']['tmp_name'];
+            move_uploaded_file($tmp,"../files/adpics/adpics".$picurl2);
 
-            $sql = "UPDATE adverts set adtitle = '$adtitle', description='$description',price='$price',picurl='$picurl' where phonenumber= '$phonenumber' and id='$postid'";
+            $sql = "UPDATE adverts set adtitle = '$adtitle', description='$description',price='$price',picurl='$picurl',picurl2='$picurl2' where phonenumber= '$phonenumber' and id='$postid'";
         
             $res = mysqli_query($con,$sql);
             
@@ -120,23 +123,82 @@
                    
                     if($queryResults2 >0) {
                               while($row = mysqli_fetch_assoc($data2)) {
-                           
-                                echo "  
-                                <div>
-                                    <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                if(!$row['picurl'] && !$row['picurl2']){
+                                    echo "  
+                                    <div>
+                                        <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                        
+                                    </div>
+    
+                                    <div style='margin-top: 1%; text-align:centre; margin-bottom: 5%;'>
                                     
-                                </div>
+                                    <p style='color: black;font-size:20px; '>".$row['description']."</p>  
+                                    <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+    
+                                    <hr>
+                                    </div>
+    
+                                   
+                                  ";
 
-                                <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
-                                <img src='../files/adpics/adpics".$row['picurl']."' style = 'width: 80%; height:auto;'>
-                                <p style='color: black;font-size:20px; '>".$row['description']."</p>  
-                                <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+                                } elseif(!$row['picurl'] && $row['picurl2']){
+                                    echo "  
+                                    <div>
+                                        <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                        
+                                    </div>
+    
+                                    <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
+                                    <img src='../files/adpics/adpics".$row['picurl2']."' style = 'width: 80%; height:auto;'>
+                                    <p style='color: black;font-size:20px; '>".$row['description']."</p>  
+                                    <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+    
+                                    <hr>
+                                    </div>
+    
+                                   
+                                  ";
 
-                                <hr>
-                                </div>
+                                } elseif($row['picurl'] && !$row['picurl2']){
+                                    echo "  
+                                    <div>
+                                        <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                        
+                                    </div>
+    
+                                    <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
+                                    <img src='../files/adpics/adpics".$row['picurl']."' style = 'width: 80%; height:auto;'>
+                                    <p style='color: black;font-size:20px; '>".$row['description']."</p>  
+                                    <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+    
+                                    <hr>
+                                    </div>
+    
+                                   
+                                  ";
 
+                                } elseif($row['picurl'] && $row['picurl2']){
+                                    echo "  
+                                    <div>
+                                        <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                        
+                                    </div>
+    
+                                    <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
+                                    <img src='../files/adpics/adpics".$row['picurl']."' style = 'width: 40%; height:auto;'>
+                                    <img src='../files/adpics/adpics".$row['picurl2']."' style = 'width: 40%; height:auto;'>
+                                    <p style='color: black;font-size:20px; '>".$row['description']."</p>  
+                                    <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+    
+                                    <hr>
+                                    </div>
+    
+                                   
+                                  ";
+
+                                }
+                           
                                
-                              ";
                               
                             }
                         }
@@ -159,10 +221,23 @@
             <input class="passinput" type="text" name="description" placeholder="Enter advert Description"  value="<?php echo $description;?>"> <br><br>
             <input class="passinput" type="text" name="price" placeholder="Enter Price  (optional)" value="<?php echo $price; ?>"><br><br>
 
-   <label style="color: red;border: 3px solid pink;"> <input style="display: none;" type="file" name="file" accept="image/*" >Choose Ad Picture</label> <br><br>
+    <input type="file" name="file" accept="image/*" ><br><br>
+    <input type="file" name="file2" accept="image/*" ><br><br>
 
     <button name="editbtn" style="background-color: red;color:white;">Edit Post</button>
     </form>
+    <br><br>
+    <div class="row">
+    <div class="col-sm-12">
+        <p>This will change this ad's cordinates to the current location; Cordinates determines your radius and who sees your ad. </p>
+        <form action="editpage.php" method="post">
+        <input type="hidden" name= "hiddenid" value=<?php $id= $_GET['postId']; echo $id; ?>> <!-- Hidden input-->
+            <input type="hidden" name='lat' value="<?php $lat = $_SESSION['latitude']; echo $lat;?>">
+            <input type="hidden" name='long' value="<?php $long = $_SESSION['longitude']; echo $long;?>">
+            <button type="submit" name="changeLocation">Change Cordinates to this Ad</button>
+        </form>
+    </div>
+    </div>
 
     <div><h5 style="color: red;"><?php echo $errors['error']; ?></h5></div>
      <div><h5 style="color: green;"><?php echo $errors['success']; ?></h5></div>
@@ -185,3 +260,35 @@
 
 </body>
 </html>
+
+<?php
+include_once('../db.php');
+    
+    if (isset($_POST['changeLocation'])) {
+
+
+        //getting session variables
+      
+        $lat = mysqli_real_escape_string($con, $_POST['lat']);
+        $long = mysqli_real_escape_string($con, $_POST['long']);
+      
+     
+        $postid = $_POST['hiddenid'];
+  
+  
+              $sql = "UPDATE adverts set latitude = '$lat', longitude='$long' where id='$postid'";
+          
+              $res = mysqli_query($con,$sql);
+              
+          
+              if($res ==1){
+          
+               //$errors['success'] ="Ad Creation Success.";
+               echo "<script>alert('Ad Cordinates changed success.')</script>"; 
+               echo "<script>location.replace('../mainpages/editpage.php?postId=$postid');</script>"; 
+           
+              }
+           
+            }
+
+?>

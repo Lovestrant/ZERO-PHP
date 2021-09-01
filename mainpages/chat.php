@@ -68,8 +68,30 @@
 
 <!-- google icons link-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
+  
+<!--Jquery links-->
+<script
+		src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+		crossorigin="anonymous"></script>
 
+<!--Emojis links-->
+    <script src="../js/emojionearea.min.js"></script>
+	<script src="../js/emojionearea.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/emojionearea.min.css">
+
+
+    <script>
+	
+    $(document).ready(function () {
+        $('#chatinput').emojioneArea({
+            pickerPosition: "top"
+            
+        
+        })
+    })
+    
+</script>
 
 
 </head>
@@ -183,7 +205,7 @@
                 <form action="chat.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name= "hiddenid" value=<?php $id= $_GET['seller']; echo $id; ?>> <!-- Hidden input-->
                 <p>
-                <input id="chatinput" type="text" name="chatsInput" placeholder="Type message" required>
+                <input style="display: none;" id="chatinput" type="text" name="chatsInput" placeholder="Type message" required>
                 <button name="submitChat" id="btnChat">Chat</button>
                 </p>
                 </form>

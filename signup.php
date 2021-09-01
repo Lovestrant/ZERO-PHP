@@ -55,7 +55,18 @@ if(isset($_POST['submit'])){
 
         $errors['success'] = "Registration successful. You are now logged in.";
 		
-            echo "<script>location.replace('index2.php')</script>";
+           
+      echo "
+      <script>
+              navigator.geolocation.getCurrentPosition(function(pos) {
+                  var ab = pos.coords.latitude;
+                  var ac = pos.coords.longitude;
+                  window.open('mainpages/radius.php?lat=' + ab + '&long=' + ac, '_self')
+              });
+          
+      </script>
+
+      "; 
 		}
 
         }

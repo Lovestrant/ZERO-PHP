@@ -42,7 +42,7 @@ if(isset($_POST['submit'])){
                 $_SESSION['phonenumber'] = $row['phonenumber'];
                 $errors['success'] ="Update successful. You are now logged in.";
                     
-                    echo "<script>location.replace('index2.php')</script>";    
+                    echo "<script>location.replace('index.php')</script>";    
     }else{               
         $errors['phonenumberErr'] = "No user with those details in the system. Please try again. Ensure you fill your details correctly.";
                                    

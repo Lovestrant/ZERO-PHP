@@ -173,6 +173,11 @@
 </div>
 
 
+    <div style="text-align: left; margin-bottom:3%;padding: 1%;">
+<form action="../logout.php">
+<button style="color:red;">Log Out</button>
+</form>
+</div>
 
 
 </div>

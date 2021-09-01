@@ -10,6 +10,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>zero The market</title>
 
+    <!--Jquery links-->
+ 
+	
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+ 
+    <script>
+			//Jquery code to load 3 posts at a time
+
+        $(document).ready(function(){
+            var flag = 0;
+            $.ajax({
+                type: "GET",
+                url: "loadhome.php",
+                data: {
+                    'offset': 0,
+                    'limit': 3
+                },
+                success: function(data){
+                    $('.homebody').append(data);
+                    flag +=3;
+                }
+            });
+
+            $(window).scroll(function(){
+                if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+                        $.ajax({
+                        type: "GET",
+                        url: "loadhome.php",
+                        data: {
+                            'offset': flag,
+                            'limit': 3
+                        },
+                        success: function(data){
+                            $('.homebody').append(data);
+                            flag +=3;
+                        }
+                    });
+                }
+                
+            });
+            
+        });
+
+       
+            
+       
+</script>
+
 <!--Css link-->
 <link rel="stylesheet" type="text/css" href="../css/home.css">
 
@@ -21,7 +70,33 @@
 
 <!-- google icons link-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
+
+
+
+
+<style>
+.zoom2{
+    width:45%;
+    height:auto;
+    transition: transform ease-in-out 0.3s;
+    }
+.zoom2:hover{
+    transform: scale(1.5);
+    text-align: center;
+    justify-content: center;
+    }
+    .zoom{
+    width:45%;
+    height:auto;
+    transition: transform ease-in-out 0.3s;
+    }
+.zoom:hover{
+    transform: scale(1.1);
+    text-align: center;
+    justify-content: center;
+    
+    }
+</style>
 
 
 
@@ -45,156 +120,17 @@
     </div>
 
 <div class="col-sm-12" id="homebody">
-   <?php 
+    <div class="row">
+        <div class="homebody">
 
-
-if($_SESSION['phonenumber']){
-
-     include_once('../db.php');
-  
-     $phonenumber = $_SESSION['phonenumber'];
-
-     $sql="SELECT * FROM followerstable WHERE phonenumber ='$phonenumber'";
-
-
-     $data2= mysqli_query($con,$sql);
-     $queryResults2= mysqli_num_rows($data2);
-     
-
-     
-      if($queryResults2 >0) {
-                while($row = mysqli_fetch_assoc($data2)) {
-                    $accountbizName = $row['bizaccountName'];
-                    if($queryResults2){
-                        
-    $sql="SELECT * FROM adverts ORDER BY ID DESC";
-
-
-    $data2= mysqli_query($con,$sql);
-    $queryResults2= mysqli_num_rows($data2);
-    
-
-    
-     if($queryResults2 >0) {
-               while($row = mysqli_fetch_assoc($data2)) {
-
-                 if($row['phonenumber'] === $_SESSION['phonenumber']) {
-                     echo "  
-                     <div>
-                     <h2 style='color: red;'>".$row['accountName']."</h2>
-                         <h3 style='color: green;'>".$row['adtitle']."</h3>
-                         
-                     </div>
-
-                     <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
-                     <img src='../files/adpics/adpics".$row['picurl']."' style = 'width: 80%; height:auto;'>
-                     <p style='color: black;font-size:20px;margin-left:5%;margin-right:5%; '>".$row['description']."</p>  
-                     <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
-                     <div>
-
-                     <h4 style='color: red;'>Your own advert.</h4>
-
-                     </div>
-                     <hr>
-                     </div>
-
-                    
-                   ";
-
-                 }elseif($row['phonenumber'] != $_SESSION['phonenumber']) {
-                     echo "  
-                     <div>
-                     <h2 style='color: red;'>".$row['accountName']."</h2>
-                         <h3 style='color: green;'>".$row['adtitle']."</h3>
-                         
-                     </div>
-
-                     <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
-                     <img src='../files/adpics/adpics".$row['picurl']."' style = 'width: 80%; height:auto;'>
-                     <p style='color: black;font-size:20px; margin-left:5%;margin-right:5%;'>".$row['description']."</p>  
-                     <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
-                     <div>
-                     <a href='chat.php?seller=".$row['id']."'><button style='color: grey;margin-right: 10%;'>Chat With Seller</button></a>
-                     <a href='order.php?postId=".$row['id']."'><button style='color: purple;'>Order</button></a>
-                     </div>
-                     <hr>
-                     </div>
-
-                    
-                   ";
-
-                 }
-            
-
-               
-             }
-         }
-
-       
-
-                }
-            } }else{
-                echo"<h3 style='color:purple;'>Follow sellers to see their adverts. Go to FindSellers now.</h3>";
-                $sql="SELECT * FROM adverts ORDER BY ID DESC";
-
-
-                $data2= mysqli_query($con,$sql);
-                $queryResults2= mysqli_num_rows($data2);
-                
-            
-                
-                 if($queryResults2 >0) {
-                           while($row = mysqli_fetch_assoc($data2)) {
-            
-                             if($row['phonenumber'] === $_SESSION['phonenumber']) {
-                                 echo "  
-                                 <div>
-                                 <h2 style='color: red;'>".$row['accountName']."</h2>
-                                     <h3 style='color: green;'>".$row['adtitle']."</h3>
-                                     
-                                 </div>
-            
-                                 <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
-                                 <img src='../files/adpics/adpics".$row['picurl']."' style = 'width: 80%; height:auto;'>
-                                 <p style='color: black;font-size:20px; margin-left:5%;margin-right:5%;'>".$row['description']."</p>  
-                                 <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
-                                 <div>
-            
-                                 <h4 style='color: red;'>Your own advert.</h4>
-            
-                                 </div>
-                                 <hr>
-                                 </div>
-            
-                                
-                               ";
-                             }
-                            }
-                            }
-        
-          }
-
-
-
-            }else{
-                echo "<script>alert('Your Session has expired.You need to login again')</script>";
-                echo "<script>location.replace('../index.php')</script>";
-             }
-                      
-     ?>
-       
-   </div>
-
-
-  
-
-    <div class= "row">
-        <div class="col-sm-12">
-        <?php include_once('footer.php'); ?>
         </div>
-      
     </div>
-    
+   
+       
+</div>
+
+
+
 
 </body>
 </html>

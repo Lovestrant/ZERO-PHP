@@ -36,20 +36,23 @@ if(isset($_POST['submit'])){
     
 
         //taking user to main page
-        $errors['success'] = "Login successful.";
+      //  $errors['success'] = "Login successful.";
+      
 
-echo '
-<script>
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            var ab = pos.coords.latitude;
-            var ac = pos.coords.longitude;
-            window.open("mainpages/radius.php?lat=" + ab + "&long=" + ac, "_self");
-        });
+      echo "
+        <script>
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    var ab = pos.coords.latitude;
+                    var ac = pos.coords.longitude;
+                    window.open('mainpages/radius.php?lat=' + ab + '&long=' + ac, '_self')
+                });
+            
+        </script>
+
+        "; 
+        
+
        
-</script>
-';
-
-    
         }
     }else{
         $errors['phonenumberErr'] = "Wrong combinations. Fill your details correctly.";

@@ -71,7 +71,31 @@
 
 <!-- google icons link-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
+
+<style>
+.zoom2{
+    width:45%;
+    height:auto;
+    transition: transform ease-in-out 0.3s;
+    }
+.zoom2:hover{
+    transform: scale(1.5);
+    text-align: center;
+    justify-content: center;
+    }
+    .zoom{
+    width:45%;
+    height:auto;
+    transition: transform ease-in-out 0.3s;
+    }
+.zoom:hover{
+    transform: scale(1.1);
+    text-align: center;
+    justify-content: center;
+    
+    }
+</style>
+
 
 
 
@@ -141,7 +165,7 @@
     ?>
 
 <div class="row" style="margin: 3%;">
- <div class="col-sm-10">
+ <div class="col-sm-5">
     <form action = "intobizacc.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name= "hiddenid" value=<?php $id= $_GET['acc_id']; echo $id; ?>> <!-- Hidden input-->
 
@@ -153,6 +177,18 @@
      <div><h5 style="color: green;"><?php echo $errors['success']; ?></h5></div>
 
  </div> 
+ <br><br><br>
+    
+    <div class="col-sm-5">
+        <p>This will change this accounts ads' cordinates to the current location; Cordinates determines your radius and who sees your ads. </p>
+        <form action="intobizacc.php" method="post">
+        <input type="hidden" name= "hiddenid" value=<?php $id= $_GET['acc_id']; echo $id; ?>> <!-- Hidden input-->
+            <input type="hidden" name='lat' value="<?php $lat = $_SESSION['latitude']; echo $lat;?>">
+            <input type="hidden" name='long' value="<?php $long = $_SESSION['longitude']; echo $long;?>">
+            <button type="submit" name="changeLocation">Change All Ads' cordinates</button>
+        </form>
+  
+    </div>
 
  <div class=col-sm-2>
          <?php 
@@ -212,15 +248,15 @@
                    
                     if($queryResults2 >0) {
                               while($row = mysqli_fetch_assoc($data2)) {
-                           
-                                echo "  
+                                if(!$row['picurl'] && !$row['picurl2']){
+                                    echo "  
                                 <div>
                                     <h3 style='color: green;'>".$row['adtitle']."</h3>
                                     
                                 </div>
 
-                                <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
-                                <img src='../files/adpics/adpics".$row['picurl']."' style = 'width: 80%; height:auto;'>
+                                <div style='margin-top: 1%; text-align:centre; margin-bottom: 5%;'>
+                                
                                 <p style='color: black;font-size:20px;margin-left:5%;margin-right:5%; '>".$row['description']."</p>  
                                 <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
                                 <div>
@@ -232,6 +268,72 @@
 
                                
                               ";
+
+                                } elseif(!$row['picurl'] && $row['picurl2']){
+                                    echo "  
+                                <div>
+                                    <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                    
+                                </div>
+
+                                <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
+                                <img class='zoom' src='../files/adpics/adpics".$row['picurl2']."' style = 'width: 80%; height:auto;'>
+                                <p style='color: black;font-size:20px;margin-left:5%;margin-right:5%; '>".$row['description']."</p>  
+                                <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+                                <div>
+                                <a href='deletepage.php?postId=".$row['id']."'><button style='color: red;margin-right: 10%;'>Delete</button></a>
+                                <a href='editpage.php?postId=".$row['id']."'><button>Edit</button></a>
+                                </div>
+                                <hr>
+                                </div>
+
+                               
+                              ";
+                                } elseif($row['picurl'] && !$row['picurl2']){
+                                    echo "  
+                                <div>
+                                    <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                    
+                                </div>
+
+                                <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
+                                <img class='zoom' src='../files/adpics/adpics".$row['picurl']."' style = 'width: 80%; height:auto;'>
+                                <p style='color: black;font-size:20px;margin-left:5%;margin-right:5%; '>".$row['description']."</p>  
+                                <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+                                <div>
+                                <a href='deletepage.php?postId=".$row['id']."'><button style='color: red;margin-right: 10%;'>Delete</button></a>
+                                <a href='editpage.php?postId=".$row['id']."'><button>Edit</button></a>
+                                </div>
+                                <hr>
+                                </div>
+
+                               
+                              ";
+                                } elseif($row['picurl'] && $row['picurl2']){
+                                    echo "  
+                                <div>
+                                    <h3 style='color: green;'>".$row['adtitle']."</h3>
+                                    
+                                </div>
+
+                                <div style='margin-top: 3%; text-align:centre; margin-bottom: 5%;'>
+                                <img class='zoom2' src='../files/adpics/adpics".$row['picurl']."' style = 'width: 45%; height:auto;'>
+                                <img class='zoom2' src='../files/adpics/adpics".$row['picurl2']."' style = 'width: 45%; height:auto;'>
+                                <p style='color: black;font-size:20px;margin-left:5%;margin-right:5%; '>".$row['description']."</p>  
+                                <p style='color: green;text-decoration:bold;font-size:20px; '>Price: ".$row['price']."</p>  
+                                <div>
+                                <a href='deletepage.php?postId=".$row['id']."'><button style='color: red;margin-right: 10%;'>Delete</button></a>
+                                <a href='editpage.php?postId=".$row['id']."'><button>Edit</button></a>
+                                </div>
+                                <hr>
+                                </div>
+
+                               
+                              ";
+
+                                }
+                           
+                                
                               
                             }
                         }
@@ -252,3 +354,35 @@
 
 </body>
 </html>
+
+<?php
+include_once('../db.php');
+    
+    if (isset($_POST['changeLocation'])) {
+
+
+        //getting session variables
+      
+        $lat = mysqli_real_escape_string($con, $_POST['lat']);
+        $long = mysqli_real_escape_string($con, $_POST['long']);
+      
+     
+        $postid = $_POST['hiddenid'];
+  
+  
+              $sql = "UPDATE adverts set latitude = '$lat', longitude='$long' where accId='$postid'";
+          
+              $res = mysqli_query($con,$sql);
+              
+          
+              if($res ==1){
+          
+               //$errors['success'] ="Ad Creation Success.";
+               echo "<script>alert('All account's Ads Cordinates changed success.')</script>"; 
+               echo "<script>location.replace('../mainpages/intobizacc.php?acc_id=$postid');</script>"; 
+           
+              }
+           
+            }
+
+?>

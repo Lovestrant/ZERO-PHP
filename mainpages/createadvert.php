@@ -16,7 +16,7 @@
       $description = mysqli_real_escape_string($con, $_POST['description']);
       $adtitle = mysqli_real_escape_string($con, $_POST['adtitle']);
       $price = mysqli_real_escape_string($con, $_POST['price']);
-      $picurl = $_FILES['file']['name'];
+     // $picurl = $_FILES['file']['name'];
       $accId = $_POST['hiddenid'];
 
       $sql = "SELECT * FROM bizaccounts where id='$accId'";
@@ -34,16 +34,21 @@
                   $latitude = $_SESSION['latitude'];
                   $longitude = $_SESSION['longitude'];
 
-        if(!empty($description) || !empty($description) || !empty($profileurl)) {
+        if(!empty($description) && !empty($adtitle)) {
 
 
 
             $picurl = $_FILES['file']['name'];
             $tmp = $_FILES['file']['tmp_name'];
             move_uploaded_file($tmp,"../files/adpics/adpics".$picurl);
+            //Second Ad pic upload
+            
+            $picurl2 = $_FILES['file2']['name'];
+            $tmp = $_FILES['file2']['tmp_name'];
+            move_uploaded_file($tmp,"../files/adpics/adpics".$picurl2);
 
-            $sql = "INSERT INTO adverts(phonenumber, accId, adtitle,description,picurl,price,accountName,Bizdescription,location,longitude,latitude) 
-            values('$phonenumber', '$accId','$adtitle','$description','$picurl','$price','$accountName','$Bizdescription','$location','$longitude','$latitude');";
+            $sql = "INSERT INTO adverts(phonenumber, accId, adtitle,description,picurl,price,accountName,Bizdescription,location,longitude,latitude,picurl2) 
+            values('$phonenumber', '$accId','$adtitle','$description','$picurl','$price','$accountName','$Bizdescription','$location','$longitude','$latitude','$picurl2');";
             $res = mysqli_query($con,$sql);
             
         
@@ -57,7 +62,7 @@
           
             }else{
                 // $errors['error'] ="Fill all required fields and choose a ad picture.";
-                 echo "<script>alert('Fill all required fields and choose a ad picture.')</script>"; 
+                 echo "<script>alert('Fill all required fields and choose ad pictures if necessary.')</script>"; 
                  echo "<script>location.replace('../mainpages/createadvert.php?acc_id=$accId');</script>"; 
              }
         
@@ -112,6 +117,7 @@
 
     
         <div class="col-sm-12" id="bizaccform">
+      
         
         <h4>Create advert:</h4>
             <form  action="createadvert.php" method="post" enctype="multipart/form-data">
@@ -121,7 +127,9 @@
             <input class="passinput" type="text" name="description" placeholder="Enter advert Description"  value="<?php echo $description;?>"> <br><br>
             <input class="passinput" type="text" name="price" placeholder="Enter Price  (optional)" value="<?php echo $price; ?>"><br><br>
 
-          <label style="color: red;border: 3px solid pink;"> <input style="display: none;" type="file" name="file" accept="image/*" >Choose Ad Picture</label> <br><br>
+           <input type="file" name="file" accept="image/*"> <br><br>
+           <input type="file" name="file2" accept="image/*"> 
+            <br><br>
             
                      <!--Error display-->
         <div><h5 style="color: red;"><?php echo $errors['error']; ?></h5></div>

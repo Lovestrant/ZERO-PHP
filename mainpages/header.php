@@ -60,10 +60,10 @@
   <div class="col-sm-12" style="text-align: right; margin-right: 2%; margin-top: -2%;">
   
   <button id="radius" onClick = "toRadius()">Radius</button>
-  <button onClick = "toHome()">FollowerAds</button>
-  <button onClick = "toProfile()">Profile</button>
+  <a href="home.php"><button>FollowerAds</button></a>
+  <a href="profile.php"><button>Profile</button></a>
   
-  <button onClick = "toFindSellers()">FindSellers</button>
+  <a href="findsellers.php"> <button>FindSellers</button></a>
   </div>
   
 
